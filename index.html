@@ -6,7 +6,11 @@
 <title>探索時間タイマー</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
   min-height:100vh;
@@ -15,7 +19,7 @@ body{
   align-items:center;
   padding:20px;
   color:#fff;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
   background-size:contain;
   background-position:center top;
   background-repeat:no-repeat;
@@ -35,7 +39,7 @@ body::before{
   width:100%;
   max-width:520px;
   padding:28px 20px;
-  border-radius:26px;
+  border-radius:22px;
   text-align:center;
   background:rgba(5,15,30,.62);
   border:1px solid rgba(0,220,255,.65);
@@ -45,6 +49,8 @@ body::before{
 
 h1{
   font-size:34px;
+  font-weight:900;
+  letter-spacing:2px;
   margin-bottom:18px;
   color:#28EAFF;
   text-shadow:
@@ -54,45 +60,54 @@ h1{
 }
 
 .current-time{
-  font-size:18px;
+  font-size:22px;
+  font-weight:700;
   margin-bottom:20px;
+  text-shadow:0 0 8px rgba(255,255,255,.35);
 }
 
 .timer-box{
   padding:22px 14px;
-  border-radius:22px;
+  border-radius:18px;
   margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.22);
   box-shadow:inset 0 0 24px rgba(255,255,255,.08),0 0 24px rgba(0,0,0,.35);
 }
 
 .status{
-  font-size:30px;
-  font-weight:bold;
+  font-size:32px;
+  font-weight:900;
   color:#FFFFFF;
-  text-shadow:0 0 10px rgba(255,255,255,.4);
+  text-shadow:0 0 10px rgba(255,255,255,.45);
   margin-bottom:10px;
+  letter-spacing:1px;
 }
 
 .countdown{
-  font-size:62px;
+  font-size:64px;
   font-weight:900;
   color:#ffd45c;
-  text-shadow:0 0 22px #ffb700;
+  letter-spacing:2px;
+  text-shadow:
+    0 0 12px #FFD45C,
+    0 0 24px #FFB700,
+    0 0 38px #FFB700;
 }
 
 .next-time{
-  font-size:20px;
+  font-size:24px;
+  font-weight:700;
   margin-bottom:20px;
   color:#FFFFFF;
   text-shadow:0 0 10px rgba(255,255,255,.4);
 }
 
 #nextHourText{
-  font-size:42px;
+  font-size:44px;
   font-weight:900;
   display:block;
   margin-top:8px;
+  letter-spacing:1px;
 }
 
 .bg-1 .timer-box{
@@ -147,14 +162,18 @@ h1{
 .schedule{
   margin-top:18px;
   padding:16px;
-  border-radius:18px;
+  border-radius:14px;
   background:rgba(0,10,24,.5);
   border:1px solid rgba(0,220,255,.4);
 }
 
 .schedule h2{
   color:#FFFFFF;
-  margin-bottom:12px;
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:14px;
+  letter-spacing:1px;
+  text-shadow:0 0 10px rgba(255,255,255,.35);
 }
 
 .time-list{
@@ -165,21 +184,20 @@ h1{
 
 .time-item{
   padding:12px 6px;
-  border-radius:14px;
+  border-radius:10px;
   background:rgba(255,255,255,.1);
   border:1px solid rgba(255,255,255,.24);
-  font-size:18px;
+  font-size:20px;
+  font-weight:700;
 }
 
 .time-item.active{
-  border-color:#00eaff;
-  box-shadow:0 0 16px rgba(0,234,255,.7);
-  font-weight:bold;
+  font-weight:900;
 }
 
 .note{
   margin-top:16px;
-  font-size:13px;
+  font-size:14px;
   opacity:.85;
 }
 </style>
