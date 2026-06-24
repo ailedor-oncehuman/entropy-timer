@@ -20,10 +20,10 @@ body{
   padding:20px;
   color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background-size:cover;
-  background-position:center;
+  background-size:contain;
+  background-position:center top;
   background-repeat:no-repeat;
-  background-attachment:fixed;
+  background-color:#050914;
   transition:background-image 1s ease;
 }
 
@@ -31,7 +31,7 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.45);
+  background:rgba(0,0,0,.22);
   z-index:-1;
 }
 
@@ -41,10 +41,10 @@ body::before{
   padding:28px 20px;
   border-radius:26px;
   text-align:center;
-  background:rgba(5,15,30,.72);
+  background:rgba(5,15,30,.62);
   border:1px solid rgba(0,220,255,.65);
   box-shadow:0 0 28px rgba(0,220,255,.45);
-  backdrop-filter:blur(6px);
+  backdrop-filter:blur(4px);
 }
 
 h1{
@@ -56,6 +56,14 @@ h1{
 .current-time{
   font-size:18px;
   margin-bottom:20px;
+}
+
+.timer-box{
+  padding:22px 14px;
+  border-radius:22px;
+  margin-bottom:20px;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:inset 0 0 24px rgba(255,255,255,.08),0 0 24px rgba(0,0,0,.35);
 }
 
 .status{
@@ -70,12 +78,35 @@ h1{
   font-weight:900;
   color:#ffd45c;
   text-shadow:0 0 22px #ffb700;
-  margin-bottom:16px;
 }
 
 .next-time{
   font-size:22px;
   margin-bottom:20px;
+}
+
+.bg-1 .timer-box{
+  background:linear-gradient(135deg,rgba(7,18,50,.88),rgba(12,40,82,.72));
+}
+
+.bg-5 .timer-box{
+  background:linear-gradient(135deg,rgba(96,38,18,.82),rgba(255,122,45,.42));
+}
+
+.bg-9 .timer-box{
+  background:linear-gradient(135deg,rgba(12,68,102,.82),rgba(60,180,255,.35));
+}
+
+.bg-13 .timer-box{
+  background:linear-gradient(135deg,rgba(13,88,128,.78),rgba(255,205,80,.32));
+}
+
+.bg-17 .timer-box{
+  background:linear-gradient(135deg,rgba(86,34,17,.86),rgba(255,119,35,.42));
+}
+
+.bg-21 .timer-box{
+  background:linear-gradient(135deg,rgba(5,12,36,.9),rgba(20,42,78,.72));
 }
 
 .warning{
@@ -107,7 +138,7 @@ h1{
   margin-top:18px;
   padding:16px;
   border-radius:18px;
-  background:rgba(0,10,24,.58);
+  background:rgba(0,10,24,.5);
   border:1px solid rgba(0,220,255,.4);
 }
 
@@ -125,8 +156,8 @@ h1{
 .time-item{
   padding:12px 6px;
   border-radius:14px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.24);
   font-size:18px;
 }
 
@@ -140,7 +171,7 @@ h1{
 .note{
   margin-top:16px;
   font-size:13px;
-  opacity:.8;
+  opacity:.85;
 }
 </style>
 </head>
@@ -152,9 +183,10 @@ h1{
 
   <div class="current-time" id="currentTime">現在時刻 --:--:--</div>
 
-  <div class="status" id="status">探索可能まで</div>
-
-  <div class="countdown" id="countdown">00:00:00</div>
+  <div class="timer-box" id="timerBox">
+    <div class="status" id="status">探索可能まで</div>
+    <div class="countdown" id="countdown">00:00:00</div>
+  </div>
 
   <div class="next-time" id="nextTime">次回探索可能時刻 --:--</div>
 
@@ -226,6 +258,7 @@ function updateTimer(){
     nextTime.setHours(1,0,0,0);
   }
 
+  const nextHour = nextTime.getHours();
   const totalSeconds = Math.floor((nextTime - now) / 1000);
 
   const hours = Math.floor(totalSeconds / 3600);
@@ -237,6 +270,8 @@ function updateTimer(){
 
   status.className = "status";
   countdown.className = "countdown";
+
+  document.body.className = "bg-" + nextHour;
 
   if(totalSeconds <= 0){
     status.textContent = "★★★★★ 探索可能！ ★★★★★";
@@ -260,12 +295,12 @@ function updateTimer(){
   }
 
   document.getElementById("nextTime").textContent =
-    "次回探索可能時刻 " + pad(nextTime.getHours()) + ":00";
+    "次回探索可能時刻 " + pad(nextHour) + ":00";
 
-  createTimeList(nextTime.getHours());
+  createTimeList(nextHour);
 
   document.body.style.backgroundImage =
-    "url('" + backgrounds[nextTime.getHours()] + "')";
+    "url('" + backgrounds[nextHour] + "')";
 }
 
 updateTimer();
