@@ -12,11 +12,7 @@
 <meta name="theme-color" content="#050914">
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   min-height:100vh;
@@ -31,10 +27,10 @@ body{
 
 #bgLayer{
   position:fixed;
-  inset:0;
+  inset:-8%;
   z-index:-3;
   background-size:cover;
-  background-position:center center;
+  background-position:center 42%;
   background-repeat:no-repeat;
   filter:brightness(1.08) contrast(1.08) saturate(1.22);
   animation:bgZoom 90s ease-in-out infinite alternate;
@@ -42,8 +38,8 @@ body{
 }
 
 @keyframes bgZoom{
-  from{transform:scale(1)}
-  to{transform:scale(1.03)}
+  from{transform:scale(1.08)}
+  to{transform:scale(1.14)}
 }
 
 body::before{
@@ -108,9 +104,7 @@ body::before{
   backdrop-filter:blur(5px);
 }
 
-.sound-panel.open .volume-box{
-  display:block;
-}
+.sound-panel.open .volume-box{display:block}
 
 .bgm-label{
   text-align:center;
@@ -134,10 +128,10 @@ body::before{
   margin-bottom:18px;
 }
 
-.brand-small{
+.once{
   font-size:20px;
   font-weight:900;
-  letter-spacing:9px;
+  letter-spacing:10px;
   color:#dfffff;
   line-height:1;
   text-shadow:
@@ -146,18 +140,45 @@ body::before{
     0 0 12px rgba(0,234,255,.35);
 }
 
-.brand-main{
+.human-logo{
+  margin-top:3px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
   font-size:54px;
   font-weight:900;
-  letter-spacing:4px;
+  letter-spacing:3px;
   line-height:.95;
   color:#eaffff;
-  -webkit-text-stroke:.6px rgba(40,234,255,.7);
+  -webkit-text-stroke:.7px rgba(40,234,255,.75);
   text-shadow:
     0 0 2px #00eaff,
     0 0 7px rgba(0,234,255,.75),
     0 0 15px rgba(0,234,255,.38);
 }
+
+.logo-mark{
+  width:34px;
+  height:36px;
+  position:relative;
+  margin:0 2px;
+}
+
+.logo-mark::before,
+.logo-mark::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:32px;
+  height:9px;
+  background:#ff2f73;
+  box-shadow:0 0 6px rgba(255,47,115,.75);
+}
+
+.logo-mark::before{top:5px}
+.logo-mark::after{bottom:5px}
 
 .title{
   margin-top:8px;
@@ -332,26 +353,6 @@ body::before{
     0 0 14px rgba(255,255,255,.22);
 }
 
-#remainingText{
-  margin-top:3px;
-  font-size:22px;
-  font-weight:900;
-  color:#fff;
-  text-align:center;
-  text-shadow:
-    0 0 2px rgba(255,255,255,.8),
-    0 0 7px rgba(255,255,255,.35);
-}
-
-#remainingText span{
-  color:#fff1a6;
-  -webkit-text-stroke:.45px rgba(255,184,0,.55);
-  text-shadow:
-    0 0 2px #ffd84d,
-    0 0 7px rgba(255,216,77,.7),
-    0 0 12px rgba(255,183,0,.4);
-}
-
 /* SCHEDULE */
 
 .schedule{
@@ -511,33 +512,23 @@ body::before{
     font-size:13px;
   }
 
-  .brand-small{
-    font-size:18px;
-  }
+  .once{font-size:18px}
 
-  .brand-main{
+  .human-logo{
     font-size:48px;
+    gap:3px;
   }
 
-  .title{
-    font-size:37px;
+  .logo-mark{
+    width:30px;
+    height:32px;
   }
 
-  .status{
-    font-size:29px;
-  }
-
-  .countdown{
-    font-size:48px;
-  }
-
-  #nextHourText{
-    font-size:50px;
-  }
-
-  .time-item{
-    font-size:20px;
-  }
+  .title{font-size:37px}
+  .status{font-size:29px}
+  .countdown{font-size:48px}
+  #nextHourText{font-size:50px}
+  .time-item{font-size:20px}
 }
 </style>
 </head>
@@ -565,8 +556,13 @@ body::before{
 <div class="app">
 
   <div class="header">
-    <div class="brand-small">ONCE</div>
-    <div class="brand-main">HUMAN</div>
+    <div class="once">ONCE</div>
+    <div class="human-logo">
+      <span>HU</span>
+      <span>M</span>
+      <span class="logo-mark"></span>
+      <span>AN</span>
+    </div>
     <div class="title">探索タイマー</div>
   </div>
 
@@ -584,7 +580,6 @@ body::before{
     <div class="progress-text" id="progressText">進捗 0%</div>
 
     <div class="next-time" id="nextTime">次回探索可能時間 --:--</div>
-    <div id="remainingText">あと <span>--分--秒</span></div>
   </div>
 
   <div class="schedule panel">
@@ -639,11 +634,6 @@ const savedVolume = localStorage.getItem("timerVolume");
 if(savedVolume !== null) volumeSlider.value = savedVolume;
 setVolume(volumeSlider.value);
 
-volumeSlider.addEventListener("input",()=>{
-  setVolume(volumeSlider.value);
-  localStorage.setItem("timerVolume", volumeSlider.value);
-});
-
 function setVolume(value){
   const volume = Number(value) / 100;
   bgm.volume = volume;
@@ -651,12 +641,28 @@ function setVolume(value){
   readySound.volume = Math.min(volume + 0.2, 1);
 }
 
+volumeSlider.addEventListener("input",()=>{
+  setVolume(volumeSlider.value);
+  localStorage.setItem("timerVolume", volumeSlider.value);
+});
+
 bgmBtn.addEventListener("click", async ()=>{
   soundPanel.classList.toggle("open");
 
   try{
     if(!bgmPlaying){
+      const now = new Date();
+      const {last,next} = getSpawnTimes(now);
+      const secondsSinceLast = Math.floor((now - last) / 1000);
+      const isReady = secondsSinceLast >= 0 && secondsSinceLast < readyWindowSeconds;
+      const targetHour = isReady ? last.getHours() : next.getHours();
+
+      await updateBgm(targetHour, true);
+
+      bgm.muted = false;
+      bgm.currentTime = bgm.currentTime || 0;
       await bgm.play();
+
       bgmPlaying = true;
       bgmBtn.textContent = "🔇 BGM OFF";
       bgmBtn.classList.add("playing");
@@ -707,20 +713,18 @@ function getBgmFile(hour){
   return dayHours.includes(hour) ? "day_bgm.mp3" : "night_bgm.mp3";
 }
 
-async function updateBgm(hour){
+async function updateBgm(hour, forcePlay=false){
   const file = getBgmFile(hour);
   bgmLabel.textContent = dayHours.includes(hour) ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
 
-  if(currentBgmFile === file) return;
+  if(currentBgmFile !== file){
+    currentBgmFile = file;
+    bgm.src = file;
+    bgm.load();
+  }
 
-  currentBgmFile = file;
-  const wasPlaying = bgmPlaying && !bgm.paused;
-
-  bgm.src = file;
-  bgm.load();
-
-  if(wasPlaying){
-    try{ await bgm.play(); }catch(e){}
+  if(forcePlay || (bgmPlaying && bgm.paused)){
+    await bgm.play();
   }
 }
 
@@ -827,7 +831,6 @@ function updateTimer(){
 
     document.getElementById("progressBar").style.width = "100%";
     document.getElementById("progressText").textContent = "進捗 100%";
-    document.getElementById("remainingText").innerHTML = "探索可能中";
     updateProgressColor(100);
 
   }else{
@@ -861,9 +864,6 @@ function updateTimer(){
     document.getElementById("progressBar").style.width = progress + "%";
     document.getElementById("progressText").textContent = "進捗 " + progress + "%";
     updateProgressColor(progress);
-
-    document.getElementById("remainingText").innerHTML =
-      "あと <span>" + pad(hours) + "時間" + pad(minutes) + "分" + pad(seconds) + "秒</span>";
   }
 
   document.getElementById("nextTime").innerHTML =
