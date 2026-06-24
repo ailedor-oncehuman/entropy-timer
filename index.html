@@ -247,9 +247,11 @@ body::before{
   font-size:52px;
   font-weight:900;
   line-height:1;
-  color:#fff1a6;
-  -webkit-text-stroke:.8px rgba(255,184,0,.7);
-  text-shadow:0 0 2px #ffd84d,0 0 8px rgba(255,216,77,.75),0 0 16px rgba(255,183,0,.45);
+  color:#fff3b0;
+  -webkit-text-stroke:.45px rgba(255,184,0,.55);
+  text-shadow:
+    0 0 2px rgba(255,216,77,.8),
+    0 0 6px rgba(255,216,77,.45);
 }
 
 .next-time{
@@ -265,8 +267,10 @@ body::before{
   margin-top:10px;
   font-size:52px;
   font-weight:900;
-  -webkit-text-stroke:.8px currentColor;
-  text-shadow:0 0 2px currentColor,0 0 7px currentColor;
+  -webkit-text-stroke:.45px currentColor;
+  text-shadow:
+    0 0 2px currentColor,
+    0 0 5px rgba(181,124,255,.45);
 }
 
 .schedule{
@@ -400,7 +404,7 @@ body::before{
     <div class="time-list" id="timeList"></div>
   </div>
 
-  <div class="note panel">🔊 60秒前・30秒前・10秒前に警告音、時間になると通知音が鳴ります。</div>
+  <div class="note panel">🔊 60秒前・30秒前・10秒前にアラート音、時間になると通知音が鳴ります。</div>
 
 </div>
 
@@ -430,7 +434,7 @@ const dayHours = [5,9,13,17];
 
 const bgmCandidates = {
   day:["day_bgm.mp3"],
-  night:["night_bgm.mp3","bgm.mp3"]
+  night:["bgm.mp3","night_bgm.mp3"]
 };
 
 const bgm = document.getElementById("bgm");
@@ -449,13 +453,39 @@ let lastTargetKey = "";
 let playedReadyKey = "";
 let playedWarnings = {};
 
+let audioCtx = null;
+let sourceNode = null;
+let gainNode = null;
+
 function pad(num){
   return String(num).padStart(2,"0");
 }
 
+function setupAudioGraph(){
+  if(audioCtx) return;
+
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if(!AudioContextClass) return;
+
+  audioCtx = new AudioContextClass();
+  sourceNode = audioCtx.createMediaElementSource(bgm);
+  gainNode = audioCtx.createGain();
+
+  sourceNode.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  setVolume(volumeSlider.value);
+}
+
 function setVolume(value){
   const volume = Number(value) / 100;
+
   bgm.volume = volume;
+
+  if(gainNode){
+    gainNode.gain.value = volume;
+  }
+
   warningSound.volume = Math.min(volume + .15,1);
   readySound.volume = Math.min(volume + .2,1);
 }
@@ -467,6 +497,10 @@ setVolume(volumeSlider.value);
 volumeSlider.addEventListener("input",()=>{
   setVolume(volumeSlider.value);
   localStorage.setItem("timerVolume",volumeSlider.value);
+});
+
+volumeSlider.addEventListener("change",()=>{
+  setVolume(volumeSlider.value);
 });
 
 function getSpawnTimes(now){
@@ -509,6 +543,12 @@ async function startBgm(hour){
   currentMode = mode;
   updateBgmLabel(hour);
 
+  setupAudioGraph();
+
+  if(audioCtx && audioCtx.state === "suspended"){
+    await audioCtx.resume();
+  }
+
   const files = selectedFile[mode]
     ? [selectedFile[mode], ...bgmCandidates[mode].filter(f=>f !== selectedFile[mode])]
     : bgmCandidates[mode];
@@ -519,6 +559,7 @@ async function startBgm(hour){
       bgm.load();
       bgm.muted = false;
       bgm.currentTime = 0;
+      setVolume(volumeSlider.value);
       await bgm.play();
       selectedFile[mode] = file;
       return true;
@@ -656,7 +697,7 @@ function updateTimer(){
 
   const nextHourText = document.getElementById("nextHourText");
   nextHourText.style.color = timeColors[displayHour];
-  nextHourText.style.textShadow = "0 0 7px " + timeColors[displayHour];
+  nextHourText.style.textShadow = "0 0 5px " + timeColors[displayHour];
 
   createTimeList(displayHour);
 }
