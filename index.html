@@ -27,10 +27,10 @@ body{
 
 #bgLayer{
   position:fixed;
-  inset:-8%;
+  inset:-16%;
   z-index:-3;
   background-size:cover;
-  background-position:center 42%;
+  background-position:center 30%;
   background-repeat:no-repeat;
   filter:brightness(1.08) contrast(1.08) saturate(1.22);
   animation:bgZoom 90s ease-in-out infinite alternate;
@@ -39,7 +39,7 @@ body{
 
 @keyframes bgZoom{
   from{transform:scale(1.08)}
-  to{transform:scale(1.14)}
+  to{transform:scale(1.15)}
 }
 
 body::before{
@@ -51,8 +51,8 @@ body::before{
     to bottom,
     rgba(0,0,0,.02) 0%,
     rgba(0,0,0,.08) 28%,
-    rgba(0,8,18,.36) 68%,
-    rgba(0,8,18,.70) 100%
+    rgba(0,8,18,.38) 68%,
+    rgba(0,8,18,.78) 100%
   );
   pointer-events:none;
 }
@@ -61,17 +61,17 @@ body::before{
   width:min(100%,430px);
   max-width:430px;
   margin:0 auto;
-  padding:18px 14px 96px;
+  padding:18px 14px 105px;
 }
 
 /* BGM */
 
 .sound-panel{
-  position:absolute;
-  top:62px;
-  right:calc(50% - 210px);
+  position:fixed;
+  top:70px;
+  right:10px;
   z-index:999;
-  width:128px;
+  width:126px;
 }
 
 #bgmBtn{
@@ -91,7 +91,6 @@ body::before{
 #bgmBtn.playing{
   color:#dfffee;
   border-color:#00ff99;
-  text-shadow:0 0 3px #00ff99;
 }
 
 .volume-box{
@@ -129,7 +128,7 @@ body::before{
 }
 
 .once{
-  font-size:20px;
+  font-size:18px;
   font-weight:900;
   letter-spacing:10px;
   color:#dfffff;
@@ -140,49 +139,49 @@ body::before{
     0 0 12px rgba(0,234,255,.35);
 }
 
-.human-logo{
-  margin-top:3px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:4px;
-  font-size:54px;
+.human-word{
+  position:relative;
+  display:inline-block;
+  margin-top:4px;
+  font-size:48px;
   font-weight:900;
-  letter-spacing:3px;
+  letter-spacing:4px;
   line-height:.95;
   color:#eaffff;
-  -webkit-text-stroke:.7px rgba(40,234,255,.75);
+  -webkit-text-stroke:.7px rgba(40,234,255,.72);
   text-shadow:
     0 0 2px #00eaff,
     0 0 7px rgba(0,234,255,.75),
     0 0 15px rgba(0,234,255,.38);
 }
 
-.logo-mark{
-  width:34px;
-  height:36px;
-  position:relative;
-  margin:0 2px;
-}
-
-.logo-mark::before,
-.logo-mark::after{
-  content:"";
+.human-mark{
   position:absolute;
   left:50%;
-  transform:translateX(-50%);
-  width:32px;
-  height:9px;
+  top:52%;
+  width:34px;
+  height:34px;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+
+.human-mark::before,
+.human-mark::after{
+  content:"";
+  position:absolute;
+  left:1px;
+  right:1px;
+  height:8px;
   background:#ff2f73;
   box-shadow:0 0 6px rgba(255,47,115,.75);
 }
 
-.logo-mark::before{top:5px}
-.logo-mark::after{bottom:5px}
+.human-mark::before{top:6px}
+.human-mark::after{bottom:6px}
 
 .title{
   margin-top:8px;
-  font-size:40px;
+  font-size:37px;
   font-weight:900;
   color:#ffeaff;
   letter-spacing:2px;
@@ -243,18 +242,14 @@ body::before{
   margin-bottom:18px;
   color:#f7ffff;
   text-align:center;
-  text-shadow:
-    0 0 2px rgba(255,255,255,.8),
-    0 0 7px rgba(255,255,255,.35);
+  text-shadow:0 0 2px rgba(255,255,255,.8),0 0 7px rgba(255,255,255,.35);
 }
 
 .current-time span{
   color:#dfffff;
   margin-right:8px;
   -webkit-text-stroke:.5px rgba(40,234,255,.65);
-  text-shadow:
-    0 0 2px #00eaff,
-    0 0 6px rgba(0,234,255,.68);
+  text-shadow:0 0 2px #00eaff,0 0 6px rgba(0,234,255,.68);
 }
 
 .timer-box{
@@ -263,37 +258,25 @@ body::before{
   margin-bottom:18px;
   background:rgba(0,15,24,.36);
   box-shadow:inset 0 0 18px rgba(0,0,0,.28);
-  text-align:center;
 }
 
 .status{
-  font-size:32px;
+  font-size:29px;
   font-weight:900;
   color:#dfffff;
   margin-bottom:8px;
-  text-align:center;
   -webkit-text-stroke:.6px rgba(40,234,255,.7);
-  text-shadow:
-    0 0 2px #00eaff,
-    0 0 7px rgba(0,234,255,.7),
-    0 0 14px rgba(0,234,255,.35);
+  text-shadow:0 0 2px #00eaff,0 0 7px rgba(0,234,255,.7),0 0 14px rgba(0,234,255,.35);
 }
 
 .countdown{
-  font-size:60px;
+  font-size:48px;
   font-weight:900;
   line-height:1;
-  letter-spacing:1px;
   color:#fff1a6;
-  text-align:center;
   -webkit-text-stroke:.8px rgba(255,184,0,.7);
-  text-shadow:
-    0 0 2px #ffd84d,
-    0 0 8px rgba(255,216,77,.75),
-    0 0 16px rgba(255,183,0,.45);
+  text-shadow:0 0 2px #ffd84d,0 0 8px rgba(255,216,77,.75),0 0 16px rgba(255,183,0,.45);
 }
-
-/* PROGRESS */
 
 .progress-wrap{
   margin:18px 0 8px;
@@ -310,7 +293,6 @@ body::before{
   width:0%;
   border-radius:999px;
   background:linear-gradient(90deg,#00eaff 0%,#00ff99 42%,#ffe600 76%,#ff3030 100%);
-  box-shadow:0 0 7px rgba(255,216,77,.58);
   transition:width .5s linear;
 }
 
@@ -318,42 +300,26 @@ body::before{
   font-size:18px;
   font-weight:900;
   color:#dfffee;
-  text-align:center;
-  text-shadow:
-    0 0 2px #00ff99,
-    0 0 7px rgba(0,255,153,.6);
+  text-shadow:0 0 2px #00ff99,0 0 7px rgba(0,255,153,.6);
   margin-bottom:14px;
 }
-
-/* NEXT */
 
 .next-time{
   font-size:27px;
   font-weight:900;
   color:#dfffff;
-  text-align:center;
   -webkit-text-stroke:.55px rgba(40,234,255,.65);
-  text-shadow:
-    0 0 2px #00eaff,
-    0 0 6px rgba(0,234,255,.68),
-    0 0 12px rgba(0,234,255,.34);
+  text-shadow:0 0 2px #00eaff,0 0 6px rgba(0,234,255,.68),0 0 12px rgba(0,234,255,.34);
 }
 
 #nextHourText{
   display:block;
   margin-top:6px;
-  font-size:58px;
+  font-size:50px;
   font-weight:900;
-  letter-spacing:1px;
-  text-align:center;
   -webkit-text-stroke:.8px currentColor;
-  text-shadow:
-    0 0 2px currentColor,
-    0 0 7px currentColor,
-    0 0 14px rgba(255,255,255,.22);
+  text-shadow:0 0 2px currentColor,0 0 7px currentColor;
 }
-
-/* SCHEDULE */
 
 .schedule{
   margin-top:14px;
@@ -365,12 +331,8 @@ body::before{
   font-size:27px;
   font-weight:900;
   margin-bottom:18px;
-  text-align:center;
   -webkit-text-stroke:.55px rgba(40,234,255,.65);
-  text-shadow:
-    0 0 2px #00eaff,
-    0 0 6px rgba(0,234,255,.68),
-    0 0 12px rgba(0,234,255,.34);
+  text-shadow:0 0 2px #00eaff,0 0 6px rgba(0,234,255,.68),0 0 12px rgba(0,234,255,.34);
 }
 
 .time-list{
@@ -384,15 +346,8 @@ body::before{
   border-radius:14px;
   background:rgba(3,12,22,.55);
   border:1px solid rgba(255,255,255,.25);
-  font-size:22px;
+  font-size:20px;
   font-weight:900;
-  text-align:center;
-  box-shadow:inset 0 0 10px rgba(255,255,255,.04);
-  text-shadow:none;
-}
-
-.time-item.active{
-  transform:scale(1.04);
 }
 
 .note{
@@ -403,19 +358,9 @@ body::before{
   text-align:left;
 }
 
-/* READY */
-
 .ready-panel{
   border:1px solid #00ff99 !important;
-  box-shadow:
-    0 0 10px #00ff99,
-    0 0 20px rgba(0,255,153,.65),
-    inset 0 0 16px rgba(0,255,153,.2);
-  animation:panelPulse 1s infinite;
-}
-
-@keyframes panelPulse{
-  50%{filter:brightness(1.15)}
+  box-shadow:0 0 10px #00ff99,0 0 20px rgba(0,255,153,.65),inset 0 0 16px rgba(0,255,153,.2);
 }
 
 .ready-overlay{
@@ -442,28 +387,8 @@ body::before{
   color:#eafff5;
   font-size:38px;
   font-weight:900;
-  text-align:center;
   box-shadow:0 0 16px #00ff99,0 0 34px rgba(0,255,153,.52);
   text-shadow:0 0 8px #00ff99;
-}
-
-.warning{
-  color:#fff1a6 !important;
-  text-shadow:0 0 8px #ffd84d !important;
-}
-
-.danger{
-  color:#fff !important;
-  -webkit-text-stroke:.6px #ff4d4d;
-  text-shadow:0 0 8px #ff4d4d !important;
-  animation:blink .8s infinite;
-}
-
-.ready{
-  color:#eafff5 !important;
-  -webkit-text-stroke:.6px #00ff99;
-  text-shadow:0 0 8px #00ff99,0 0 16px #00ff99 !important;
-  animation:pulse .8s infinite;
 }
 
 @keyframes overlayFade{
@@ -473,62 +398,12 @@ body::before{
   100%{opacity:0}
 }
 
-@keyframes blink{50%{opacity:.35}}
-@keyframes pulse{50%{transform:scale(1.04)}}
-
-/* PC */
-
 @media(min-width:700px){
-  .app{
-    width:430px;
-    max-width:430px;
-  }
-
   .sound-panel{
     position:absolute;
     top:62px;
     right:calc(50% - 210px);
   }
-}
-
-/* iPhone */
-
-@media(max-width:420px){
-  .app{
-    width:100%;
-    max-width:430px;
-    padding:18px 16px 100px;
-  }
-
-  .sound-panel{
-    position:fixed;
-    top:70px;
-    right:10px;
-    width:126px;
-  }
-
-  #bgmBtn{
-    height:44px;
-    font-size:13px;
-  }
-
-  .once{font-size:18px}
-
-  .human-logo{
-    font-size:48px;
-    gap:3px;
-  }
-
-  .logo-mark{
-    width:30px;
-    height:32px;
-  }
-
-  .title{font-size:37px}
-  .status{font-size:29px}
-  .countdown{font-size:48px}
-  #nextHourText{font-size:50px}
-  .time-item{font-size:20px}
 }
 </style>
 </head>
@@ -537,12 +412,12 @@ body::before{
 
 <div id="bgLayer"></div>
 
-<audio id="bgm" loop preload="auto"></audio>
+<audio id="bgm" loop preload="auto" playsinline></audio>
 <audio id="warningSound" preload="auto" src="warning.mp3"></audio>
 <audio id="readySound" preload="auto" src="ready.mp3"></audio>
 
 <div class="sound-panel" id="soundPanel">
-  <button id="bgmBtn">🔊 BGM ON</button>
+  <button id="bgmBtn">▶ BGM再生</button>
   <div class="volume-box">
     <div class="bgm-label" id="bgmLabel">BGM</div>
     <input id="volumeSlider" type="range" min="0" max="100" value="18">
@@ -557,12 +432,7 @@ body::before{
 
   <div class="header">
     <div class="once">ONCE</div>
-    <div class="human-logo">
-      <span>HU</span>
-      <span>M</span>
-      <span class="logo-mark"></span>
-      <span>AN</span>
-    </div>
+    <div class="human-word">HUMAN<span class="human-mark"></span></div>
     <div class="title">探索タイマー</div>
   </div>
 
@@ -577,6 +447,7 @@ body::before{
     <div class="progress-wrap">
       <div class="progress-bar" id="progressBar"></div>
     </div>
+
     <div class="progress-text" id="progressText">進捗 0%</div>
 
     <div class="next-time" id="nextTime">次回探索可能時間 --:--</div>
@@ -596,24 +467,29 @@ const spawnHours = [1,5,9,13,17,21];
 const readyWindowSeconds = 60;
 
 const backgrounds = {
-  1: "IMG_7432.jpeg",
-  5: "IMG_7433.jpeg",
-  9: "IMG_7434.jpeg",
-  13: "IMG_7435.jpeg",
-  17: "IMG_7436.jpeg",
-  21: "IMG_7437.jpeg"
+  1:"IMG_7432.jpeg",
+  5:"IMG_7433.jpeg",
+  9:"IMG_7434.jpeg",
+  13:"IMG_7435.jpeg",
+  17:"IMG_7436.jpeg",
+  21:"IMG_7437.jpeg"
 };
 
 const timeColors = {
-  1:  "#28EAFF",
-  5:  "#FF5FCB",
-  9:  "#28EAFF",
-  13: "#F4FF35",
-  17: "#FFB000",
-  21: "#B57CFF"
+  1:"#28EAFF",
+  5:"#FF5FCB",
+  9:"#28EAFF",
+  13:"#F4FF35",
+  17:"#FFB000",
+  21:"#B57CFF"
 };
 
 const dayHours = [5,9,13,17];
+
+const bgmCandidates = {
+  day:["day_bgm.mp3"],
+  night:["night_bgm.mp3","bgm.mp3"]
+};
 
 const bgm = document.getElementById("bgm");
 const bgmBtn = document.getElementById("bgmBtn");
@@ -625,63 +501,32 @@ const bgmLabel = document.getElementById("bgmLabel");
 const readyOverlay = document.getElementById("readyOverlay");
 
 let bgmPlaying = false;
+let currentMode = "";
 let currentBgmFile = "";
+let selectedFile = {day:"day_bgm.mp3",night:""};
 let lastTargetKey = "";
 let playedReadyKey = "";
 let playedWarnings = {};
+
+function pad(num){
+  return String(num).padStart(2,"0");
+}
+
+function setVolume(value){
+  const volume = Number(value) / 100;
+  bgm.volume = volume;
+  warningSound.volume = Math.min(volume + .15,1);
+  readySound.volume = Math.min(volume + .2,1);
+}
 
 const savedVolume = localStorage.getItem("timerVolume");
 if(savedVolume !== null) volumeSlider.value = savedVolume;
 setVolume(volumeSlider.value);
 
-function setVolume(value){
-  const volume = Number(value) / 100;
-  bgm.volume = volume;
-  warningSound.volume = Math.min(volume + 0.15, 1);
-  readySound.volume = Math.min(volume + 0.2, 1);
-}
-
 volumeSlider.addEventListener("input",()=>{
   setVolume(volumeSlider.value);
-  localStorage.setItem("timerVolume", volumeSlider.value);
+  localStorage.setItem("timerVolume",volumeSlider.value);
 });
-
-bgmBtn.addEventListener("click", async ()=>{
-  soundPanel.classList.toggle("open");
-
-  try{
-    if(!bgmPlaying){
-      const now = new Date();
-      const {last,next} = getSpawnTimes(now);
-      const secondsSinceLast = Math.floor((now - last) / 1000);
-      const isReady = secondsSinceLast >= 0 && secondsSinceLast < readyWindowSeconds;
-      const targetHour = isReady ? last.getHours() : next.getHours();
-
-      await updateBgm(targetHour, true);
-
-      bgm.muted = false;
-      bgm.currentTime = bgm.currentTime || 0;
-      await bgm.play();
-
-      bgmPlaying = true;
-      bgmBtn.textContent = "🔇 BGM OFF";
-      bgmBtn.classList.add("playing");
-      localStorage.setItem("bgmPlaying","true");
-    }else{
-      bgm.pause();
-      bgmPlaying = false;
-      bgmBtn.textContent = "🔊 BGM ON";
-      bgmBtn.classList.remove("playing");
-      localStorage.setItem("bgmPlaying","false");
-    }
-  }catch(e){
-    bgmBtn.textContent = "▶ BGM再生";
-  }
-});
-
-function pad(num){
-  return String(num).padStart(2,"0");
-}
 
 function getSpawnTimes(now){
   let last = null;
@@ -696,37 +541,93 @@ function getSpawnTimes(now){
 
   if(!last){
     last = new Date(now);
-    last.setDate(last.getDate() - 1);
+    last.setDate(last.getDate()-1);
     last.setHours(21,0,0,0);
   }
 
   if(!next){
     next = new Date(now);
-    next.setDate(next.getDate() + 1);
+    next.setDate(next.getDate()+1);
     next.setHours(1,0,0,0);
   }
 
   return {last,next};
 }
 
-function getBgmFile(hour){
-  return dayHours.includes(hour) ? "day_bgm.mp3" : "night_bgm.mp3";
+function getMode(hour){
+  return dayHours.includes(hour) ? "day" : "night";
 }
 
-async function updateBgm(hour, forcePlay=false){
-  const file = getBgmFile(hour);
-  bgmLabel.textContent = dayHours.includes(hour) ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
+function updateBgmLabel(hour){
+  const mode = getMode(hour);
+  bgmLabel.textContent = mode === "day" ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
+}
 
-  if(currentBgmFile !== file){
+function prepareBgm(hour){
+  const mode = getMode(hour);
+  updateBgmLabel(hour);
+
+  if(currentMode !== mode && !bgmPlaying){
+    currentMode = mode;
+    const file = selectedFile[mode] || bgmCandidates[mode][0];
     currentBgmFile = file;
     bgm.src = file;
     bgm.load();
   }
-
-  if(forcePlay || (bgmPlaying && bgm.paused)){
-    await bgm.play();
-  }
 }
+
+async function startBgm(hour){
+  const mode = getMode(hour);
+  currentMode = mode;
+  updateBgmLabel(hour);
+
+  const files = selectedFile[mode]
+    ? [selectedFile[mode], ...bgmCandidates[mode].filter(f=>f !== selectedFile[mode])]
+    : bgmCandidates[mode];
+
+  for(const file of files){
+    try{
+      currentBgmFile = file;
+      bgm.src = file;
+      bgm.load();
+      bgm.muted = false;
+      bgm.currentTime = 0;
+      await bgm.play();
+      selectedFile[mode] = file;
+      return true;
+    }catch(e){}
+  }
+
+  return false;
+}
+
+bgmBtn.addEventListener("click", async ()=>{
+  soundPanel.classList.toggle("open");
+
+  if(bgmPlaying){
+    bgm.pause();
+    bgmPlaying = false;
+    bgmBtn.textContent = "▶ BGM再生";
+    bgmBtn.classList.remove("playing");
+    return;
+  }
+
+  const now = new Date();
+  const {last,next} = getSpawnTimes(now);
+  const secondsSinceLast = Math.floor((now-last)/1000);
+  const isReady = secondsSinceLast >= 0 && secondsSinceLast < readyWindowSeconds;
+  const hour = isReady ? last.getHours() : next.getHours();
+
+  const success = await startBgm(hour);
+
+  if(success){
+    bgmPlaying = true;
+    bgmBtn.textContent = "🔇 BGM停止";
+    bgmBtn.classList.add("playing");
+  }else{
+    bgmBtn.textContent = "音源なし";
+  }
+});
 
 function playOnce(audio){
   try{
@@ -754,16 +655,12 @@ function createTimeList(activeHour){
     const item = document.createElement("div");
     item.className = "time-item";
     item.textContent = pad(hour) + ":00";
-
     item.style.color = timeColors[hour];
     item.style.textShadow = "0 0 2px " + timeColors[hour];
 
     if(hour === activeHour){
-      item.classList.add("active");
       item.style.borderColor = timeColors[hour];
-      item.style.boxShadow =
-        "0 0 8px " + timeColors[hour] +
-        ", inset 0 0 8px rgba(255,255,255,.06)";
+      item.style.boxShadow = "0 0 8px " + timeColors[hour];
     }
 
     list.appendChild(item);
@@ -784,11 +681,25 @@ function updateProgressColor(progress){
   }
 }
 
+async function syncPlayingBgm(hour){
+  if(!bgmPlaying) return;
+
+  const mode = getMode(hour);
+  if(mode === currentMode) return;
+
+  const success = await startBgm(hour);
+  if(!success){
+    bgmPlaying = false;
+    bgmBtn.textContent = "音源なし";
+    bgmBtn.classList.remove("playing");
+  }
+}
+
 function updateTimer(){
   const now = new Date();
   const {last,next} = getSpawnTimes(now);
 
-  const secondsSinceLast = Math.floor((now - last) / 1000);
+  const secondsSinceLast = Math.floor((now-last)/1000);
   const isReady = secondsSinceLast >= 0 && secondsSinceLast < readyWindowSeconds;
 
   const displayTime = isReady ? last : next;
@@ -803,6 +714,12 @@ function updateTimer(){
   document.getElementById("currentTime").innerHTML =
     "<span>現在時刻</span> " + pad(now.getHours()) + ":" + pad(now.getMinutes()) + ":" + pad(now.getSeconds());
 
+  document.getElementById("bgLayer").style.backgroundImage =
+    "url('" + backgrounds[displayHour] + "')";
+
+  prepareBgm(displayHour);
+  syncPlayingBgm(displayHour);
+
   const status = document.getElementById("status");
   const countdown = document.getElementById("countdown");
   const timerBox = document.getElementById("timerBox");
@@ -811,17 +728,10 @@ function updateTimer(){
   countdown.className = "countdown";
   timerBox.classList.remove("ready-panel");
 
-  document.getElementById("bgLayer").style.backgroundImage =
-    "url('" + backgrounds[displayHour] + "')";
-
-  updateBgm(displayHour);
-
   if(isReady){
-    status.textContent = "★★★★★ 探索可能！ ★★★★★";
-    status.classList.add("ready");
-    countdown.classList.add("ready");
-    timerBox.classList.add("ready-panel");
+    status.textContent = "探索可能！";
     countdown.textContent = "00:00:00";
+    timerBox.classList.add("ready-panel");
 
     if(playedReadyKey !== targetKey){
       playOnce(readySound);
@@ -832,23 +742,14 @@ function updateTimer(){
     document.getElementById("progressBar").style.width = "100%";
     document.getElementById("progressText").textContent = "進捗 100%";
     updateProgressColor(100);
-
   }else{
-    const totalSeconds = Math.floor((next - now) / 1000);
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+    const totalSeconds = Math.floor((next-now)/1000);
+    const h = Math.floor(totalSeconds/3600);
+    const m = Math.floor((totalSeconds%3600)/60);
+    const s = totalSeconds%60;
 
     status.textContent = "探索可能まで";
-    countdown.textContent = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
-
-    if(totalSeconds <= 60){
-      status.classList.add("danger");
-      countdown.classList.add("danger");
-    }else if(totalSeconds <= 300){
-      status.classList.add("warning");
-      countdown.classList.add("warning");
-    }
+    countdown.textContent = pad(h) + ":" + pad(m) + ":" + pad(s);
 
     [60,30,10].forEach(mark=>{
       if(totalSeconds === mark && !playedWarnings[mark]){
@@ -857,9 +758,9 @@ function updateTimer(){
       }
     });
 
-    const period = next - last;
-    const elapsed = now - last;
-    const progress = Math.max(0, Math.min(100, Math.floor((elapsed / period) * 100)));
+    const period = next-last;
+    const elapsed = now-last;
+    const progress = Math.max(0,Math.min(100,Math.floor((elapsed/period)*100)));
 
     document.getElementById("progressBar").style.width = progress + "%";
     document.getElementById("progressText").textContent = "進捗 " + progress + "%";
@@ -867,9 +768,7 @@ function updateTimer(){
   }
 
   document.getElementById("nextTime").innerHTML =
-    '次回探索可能時間<br><span id="nextHourText">' +
-    pad(displayHour) +
-    ':00</span>';
+    '次回探索可能時間<br><span id="nextHourText">' + pad(displayHour) + ':00</span>';
 
   const nextHourText = document.getElementById("nextHourText");
   nextHourText.style.color = timeColors[displayHour];
