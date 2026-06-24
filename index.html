@@ -6,9 +6,12 @@
 <title>探索時間タイマー</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="BF4042AE-AAED-4157-A785-6E83CD697A33.png">
+<link rel="apple-touch-icon" href="BF4042AE-AAED-4157-A785-6E83CD697A33.png">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="探索時間タイマー">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="探索タイマー">
 <meta name="theme-color" content="#050914">
 
 <style>
@@ -447,7 +450,6 @@ const bgmLabel = document.getElementById("bgmLabel");
 const readyOverlay = document.getElementById("readyOverlay");
 
 let bgmPlaying = false;
-let currentMode = "";
 let selectedFile = {day:"day_bgm.mp3",night:"bgm.mp3"};
 let lastTargetKey = "";
 let playedReadyKey = "";
@@ -540,7 +542,6 @@ function updateBgmLabel(hour){
 
 async function startBgm(hour){
   const mode = getMode(hour);
-  currentMode = mode;
   updateBgmLabel(hour);
 
   setupAudioGraph();
