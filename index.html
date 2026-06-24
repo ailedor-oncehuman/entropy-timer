@@ -80,11 +80,25 @@ body::before{
 }
 
 .volume-box{
-  width:130px;
+  width:145px;
   padding:8px;
   border-radius:12px;
-  background:rgba(5,15,30,.72);
+  background:rgba(5,15,30,.78);
   border:1px solid rgba(40,234,255,.35);
+  display:none;
+}
+
+.sound-panel.open .volume-box{
+  display:block;
+}
+
+.bgm-label{
+  font-size:12px;
+  font-weight:800;
+  color:#fff;
+  opacity:.9;
+  margin-bottom:4px;
+  text-align:center;
 }
 
 #volumeSlider{
@@ -101,6 +115,15 @@ body::before{
   border:1px solid rgba(0,220,255,.65);
   box-shadow:0 0 28px rgba(0,220,255,.45);
   backdrop-filter:blur(4px);
+}
+
+.brand{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:5px;
+  color:#FFFFFF;
+  margin-bottom:8px;
+  text-shadow:0 0 8px #28EAFF,0 0 18px #00AFFF;
 }
 
 h1{
@@ -167,9 +190,9 @@ h1{
   height:100%;
   width:0%;
   border-radius:999px;
-  background:linear-gradient(90deg,#28EAFF,#FFD45C);
-  box-shadow:0 0 14px rgba(255,212,92,.8);
-  transition:width .5s linear;
+  background:linear-gradient(90deg,#28EAFF,#00ff99);
+  box-shadow:0 0 14px rgba(40,234,255,.8);
+  transition:width .5s linear, background .5s linear;
 }
 
 .progress-text{
@@ -263,6 +286,42 @@ h1{
   font-size:14px;
   opacity:.85;
 }
+
+.ready-overlay{
+  position:fixed;
+  inset:0;
+  z-index:998;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,20,12,.48);
+  backdrop-filter:blur(3px);
+}
+
+.ready-overlay.show{
+  display:flex;
+  animation:overlayFade 2s ease forwards;
+}
+
+.ready-card{
+  padding:28px 34px;
+  border-radius:22px;
+  background:rgba(0,30,20,.9);
+  border:2px solid #00ff99;
+  color:#00ff99;
+  font-size:36px;
+  font-weight:900;
+  text-align:center;
+  box-shadow:0 0 25px #00ff99,0 0 60px rgba(0,255,153,.65);
+  text-shadow:0 0 18px #00ff99;
+}
+
+@keyframes overlayFade{
+  0%{opacity:0}
+  15%{opacity:1}
+  80%{opacity:1}
+  100%{opacity:0}
+}
 </style>
 </head>
 
@@ -274,14 +333,20 @@ h1{
 <audio id="warningSound" preload="auto" src="warning.mp3"></audio>
 <audio id="readySound" preload="auto" src="ready.mp3"></audio>
 
-<div class="sound-panel">
+<div class="sound-panel" id="soundPanel">
   <button id="bgmBtn">🔊 BGM ON</button>
   <div class="volume-box">
+    <div class="bgm-label" id="bgmLabel">BGM</div>
     <input id="volumeSlider" type="range" min="0" max="100" value="18">
   </div>
 </div>
 
+<div class="ready-overlay" id="readyOverlay">
+  <div class="ready-card">探索可能！</div>
+</div>
+
 <div class="container">
+  <div class="brand">Once Human</div>
   <h1>探索時間タイマー</h1>
 
   <div class="current-time" id="currentTime">現在時刻 --:--:--</div>
@@ -329,13 +394,15 @@ const timeColors = {
 };
 
 const dayHours = [5,9,13,17];
-const nightHours = [1,21];
 
 const bgm = document.getElementById("bgm");
 const bgmBtn = document.getElementById("bgmBtn");
 const volumeSlider = document.getElementById("volumeSlider");
 const warningSound = document.getElementById("warningSound");
 const readySound = document.getElementById("readySound");
+const soundPanel = document.getElementById("soundPanel");
+const bgmLabel = document.getElementById("bgmLabel");
+const readyOverlay = document.getElementById("readyOverlay");
 
 let bgmPlaying = false;
 let currentBgmFile = "";
@@ -344,9 +411,7 @@ let playedReadyKey = "";
 let playedWarnings = {};
 
 const savedVolume = localStorage.getItem("timerVolume");
-if(savedVolume !== null){
-  volumeSlider.value = savedVolume;
-}
+if(savedVolume !== null) volumeSlider.value = savedVolume;
 setVolume(volumeSlider.value);
 
 volumeSlider.addEventListener("input",()=>{
@@ -362,6 +427,8 @@ function setVolume(value){
 }
 
 bgmBtn.addEventListener("click", async ()=>{
+  soundPanel.classList.toggle("open");
+
   try{
     if(!bgmPlaying){
       await bgm.play();
@@ -381,12 +448,6 @@ bgmBtn.addEventListener("click", async ()=>{
   }
 });
 
-window.addEventListener("load",()=>{
-  if(localStorage.getItem("bgmPlaying") === "true"){
-    bgmBtn.textContent = "▶ BGM再生";
-  }
-});
-
 function pad(num){
   return String(num).padStart(2,"0");
 }
@@ -398,14 +459,8 @@ function getSpawnTimes(now){
   for(const hour of spawnHours){
     const candidate = new Date(now);
     candidate.setHours(hour,0,0,0);
-
-    if(candidate <= now){
-      last = candidate;
-    }
-
-    if(candidate > now && !next){
-      next = candidate;
-    }
+    if(candidate <= now) last = candidate;
+    if(candidate > now && !next) next = candidate;
   }
 
   if(!last){
@@ -424,14 +479,13 @@ function getSpawnTimes(now){
 }
 
 function getBgmFile(hour){
-  if(dayHours.includes(hour)){
-    return "day_bgm.mp3";
-  }
-  return "night_bgm.mp3";
+  return dayHours.includes(hour) ? "day_bgm.mp3" : "night_bgm.mp3";
 }
 
 async function updateBgm(hour){
   const file = getBgmFile(hour);
+  const label = dayHours.includes(hour) ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
+  bgmLabel.textContent = label;
 
   if(currentBgmFile === file) return;
 
@@ -442,9 +496,7 @@ async function updateBgm(hour){
   bgm.load();
 
   if(wasPlaying){
-    try{
-      await bgm.play();
-    }catch(e){}
+    try{ await bgm.play(); }catch(e){}
   }
 }
 
@@ -453,6 +505,17 @@ function playOnce(audio){
     audio.currentTime = 0;
     audio.play();
   }catch(e){}
+}
+
+function showReadyOverlay(){
+  readyOverlay.classList.remove("show");
+  void readyOverlay.offsetWidth;
+  readyOverlay.classList.add("show");
+  setTimeout(()=>readyOverlay.classList.remove("show"),2200);
+
+  if(navigator.vibrate){
+    navigator.vibrate([250,100,250]);
+  }
 }
 
 function createTimeList(activeHour){
@@ -474,6 +537,24 @@ function createTimeList(activeHour){
 
     list.appendChild(item);
   });
+}
+
+function updateProgressColor(progress){
+  const bar = document.getElementById("progressBar");
+
+  if(progress >= 98){
+    bar.style.background = "linear-gradient(90deg,#ff4d4d,#ff9a3c)";
+    bar.style.boxShadow = "0 0 14px rgba(255,77,77,.9)";
+  }else if(progress >= 90){
+    bar.style.background = "linear-gradient(90deg,#ffd84d,#ff9a3c)";
+    bar.style.boxShadow = "0 0 14px rgba(255,216,77,.9)";
+  }else if(progress >= 70){
+    bar.style.background = "linear-gradient(90deg,#28EAFF,#00ff99)";
+    bar.style.boxShadow = "0 0 14px rgba(0,255,153,.8)";
+  }else{
+    bar.style.background = "linear-gradient(90deg,#28EAFF,#40E8FF)";
+    bar.style.boxShadow = "0 0 14px rgba(40,234,255,.8)";
+  }
 }
 
 function updateTimer(){
@@ -518,11 +599,14 @@ function updateTimer(){
 
     if(playedReadyKey !== targetKey){
       playOnce(readySound);
+      showReadyOverlay();
       playedReadyKey = targetKey;
     }
 
     document.getElementById("progressBar").style.width = "100%";
     document.getElementById("progressText").textContent = "進捗 100%";
+    updateProgressColor(100);
+
   }else{
     const totalSeconds = Math.floor((next - now) / 1000);
     const hours = Math.floor(totalSeconds / 3600);
@@ -552,6 +636,7 @@ function updateTimer(){
     const progress = Math.max(0, Math.min(100, Math.floor((elapsed / period) * 100)));
     document.getElementById("progressBar").style.width = progress + "%";
     document.getElementById("progressText").textContent = "進捗 " + progress + "%";
+    updateProgressColor(progress);
   }
 
   document.getElementById("nextTime").innerHTML =
