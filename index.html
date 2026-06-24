@@ -29,14 +29,14 @@ body{
   background-size:cover;
   background-position:center top;
   background-repeat:no-repeat;
-  filter:brightness(.75) contrast(1.08) saturate(1.15);
+  filter:brightness(.95) contrast(1.15) saturate(1.35);
   transition:background-image 1s ease;
-  animation:bgZoom 80s ease-in-out infinite alternate;
+  animation:bgZoom 90s ease-in-out infinite alternate;
 }
 
 @keyframes bgZoom{
   from{transform:scale(1)}
-  to{transform:scale(1.055)}
+  to{transform:scale(1.05)}
 }
 
 body::before{
@@ -45,20 +45,20 @@ body::before{
   inset:0;
   z-index:-2;
   background:
-    linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,8,18,.35),rgba(0,8,18,.95)),
-    radial-gradient(circle at top,rgba(0,234,255,.18),transparent 45%);
+    linear-gradient(to bottom,rgba(0,0,0,.04),rgba(0,0,0,.16),rgba(0,8,18,.72)),
+    radial-gradient(circle at top,rgba(0,234,255,.14),transparent 45%);
 }
 
 .app{
   width:100%;
   max-width:520px;
   margin:0 auto;
-  padding:30px 18px 38px;
+  padding:18px 18px 36px;
 }
 
 .sound-panel{
   position:fixed;
-  top:14px;
+  top:74px;
   right:14px;
   z-index:999;
   display:flex;
@@ -71,7 +71,7 @@ body::before{
   padding:10px 14px;
   border-radius:14px;
   border:1px solid rgba(40,234,255,.9);
-  background:rgba(4,16,28,.82);
+  background:rgba(4,16,28,.78);
   color:#28EAFF;
   font-size:14px;
   font-weight:900;
@@ -82,17 +82,15 @@ body::before{
 #bgmBtn.playing{
   color:#00ff99;
   border-color:#00ff99;
-  box-shadow:0 0 16px rgba(0,255,153,.65),inset 0 0 14px rgba(0,255,153,.14);
 }
 
 .volume-box{
   width:150px;
   padding:8px;
   border-radius:14px;
-  background:rgba(4,16,28,.82);
+  background:rgba(4,16,28,.78);
   border:1px solid rgba(40,234,255,.45);
   display:none;
-  box-shadow:0 0 16px rgba(40,234,255,.3);
 }
 
 .sound-panel.open .volume-box{display:block}
@@ -100,62 +98,61 @@ body::before{
 .bgm-label{
   font-size:12px;
   font-weight:900;
-  color:#fff;
-  opacity:.95;
-  margin-bottom:4px;
   text-align:center;
+  margin-bottom:4px;
 }
 
 #volumeSlider{width:100%}
 
 .header{
-  padding-top:34px;
-  margin-bottom:26px;
+  padding-top:4px;
+  margin-bottom:10px;
   text-align:center;
 }
 
 .brand{
-  font-size:20px;
+  font-size:22px;
   font-weight:900;
   letter-spacing:8px;
   color:#28EAFF;
-  text-shadow:0 0 8px #28EAFF,0 0 18px #00AFFF,0 0 34px #00AFFF;
-  margin-bottom:4px;
+  text-shadow:0 0 8px #28EAFF,0 0 18px #00AFFF;
 }
 
 .brand-main{
-  font-size:48px;
+  font-size:62px;
   font-weight:900;
   letter-spacing:5px;
-  line-height:1;
+  line-height:.95;
   color:#28EAFF;
   text-shadow:0 0 10px #28EAFF,0 0 24px #00D9FF,0 0 46px #00AFFF;
 }
 
 .title{
-  margin-top:14px;
-  font-size:42px;
+  margin-top:10px;
+  font-size:52px;
   font-weight:900;
   letter-spacing:2px;
   color:#ff2fb3;
   text-shadow:0 0 8px #ff2fb3,0 0 22px #ff2fb3,0 0 42px #ff008c;
 }
 
+.card,.schedule,.note{
+  background:rgba(0,10,20,.36);
+  border:1px solid rgba(40,234,255,.72);
+  box-shadow:0 0 22px rgba(40,234,255,.42),inset 0 0 22px rgba(40,234,255,.06);
+  backdrop-filter:blur(7px);
+}
+
 .card{
-  margin-top:22px;
-  padding:22px 18px;
+  margin-top:10px;
+  padding:20px 18px;
   border-radius:20px;
-  background:rgba(0,10,20,.62);
-  border:1px solid rgba(40,234,255,.75);
-  box-shadow:0 0 22px rgba(40,234,255,.48),inset 0 0 22px rgba(40,234,255,.08);
-  backdrop-filter:blur(5px);
 }
 
 .current-time{
   font-size:22px;
   font-weight:900;
   margin-bottom:18px;
-  color:#fff;
   text-shadow:0 0 10px rgba(255,255,255,.5);
 }
 
@@ -168,7 +165,7 @@ body::before{
   padding:24px 14px 22px;
   border-radius:18px;
   margin-bottom:20px;
-  background:rgba(0,20,28,.45);
+  background:rgba(0,20,28,.28);
 }
 
 .ready-panel{
@@ -177,9 +174,7 @@ body::before{
   animation:panelPulse 1s infinite;
 }
 
-@keyframes panelPulse{
-  50%{filter:brightness(1.35)}
-}
+@keyframes panelPulse{50%{filter:brightness(1.35)}}
 
 .status{
   font-size:34px;
@@ -187,7 +182,6 @@ body::before{
   color:#28EAFF;
   text-shadow:0 0 10px #28EAFF,0 0 22px #00AFFF;
   margin-bottom:10px;
-  letter-spacing:1px;
 }
 
 .countdown{
@@ -201,7 +195,7 @@ body::before{
 
 .progress-wrap{
   margin:20px 0 10px;
-  height:18px;
+  height:22px;
   border-radius:999px;
   background:rgba(255,255,255,.13);
   border:1px solid rgba(255,255,255,.26);
@@ -212,8 +206,8 @@ body::before{
   height:100%;
   width:0%;
   border-radius:999px;
-  background:linear-gradient(90deg,#28EAFF,#00ff99);
-  box-shadow:0 0 14px rgba(40,234,255,.8);
+  background:linear-gradient(90deg,#00eaff 0%,#00ff99 40%,#ffe600 75%,#ff3030 100%);
+  box-shadow:0 0 16px rgba(255,216,77,.9);
   transition:width .5s linear, background .5s linear;
 }
 
@@ -222,15 +216,15 @@ body::before{
   font-weight:900;
   color:#00ff99;
   text-shadow:0 0 10px #00ff99;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
 
 .next-time{
-  font-size:28px;
+  font-size:30px;
   font-weight:900;
   color:#28EAFF;
   text-shadow:0 0 10px #28EAFF,0 0 22px #00AFFF;
-  margin-top:10px;
+  margin-top:8px;
 }
 
 #nextHourText{
@@ -242,11 +236,9 @@ body::before{
 }
 
 #remainingText{
-  margin-top:6px;
+  margin-top:4px;
   font-size:24px;
   font-weight:900;
-  color:#fff;
-  text-shadow:0 0 10px rgba(255,255,255,.5);
 }
 
 #remainingText span{
@@ -255,12 +247,9 @@ body::before{
 }
 
 .schedule{
-  margin-top:22px;
+  margin-top:12px;
   padding:18px;
   border-radius:20px;
-  background:rgba(0,10,20,.58);
-  border:1px solid rgba(40,234,255,.6);
-  box-shadow:0 0 18px rgba(40,234,255,.32),inset 0 0 18px rgba(40,234,255,.06);
 }
 
 .schedule h2{
@@ -268,7 +257,6 @@ body::before{
   font-size:30px;
   font-weight:900;
   margin-bottom:18px;
-  letter-spacing:1px;
   text-shadow:0 0 10px #28EAFF,0 0 22px #00AFFF;
 }
 
@@ -281,25 +269,23 @@ body::before{
 .time-item{
   padding:14px 6px;
   border-radius:12px;
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.22);
   font-size:22px;
   font-weight:900;
   color:#fff;
-  box-shadow:inset 0 0 14px rgba(255,255,255,.05);
 }
 
-.time-item.active{font-weight:900}
+.time-item.active{
+  transform:scale(1.05);
+}
 
 .note{
-  margin-top:18px;
+  margin-top:12px;
   padding:16px;
   border-radius:16px;
   font-size:15px;
   line-height:1.7;
-  opacity:.95;
-  background:rgba(0,10,20,.58);
-  border:1px solid rgba(40,234,255,.45);
 }
 
 .ready-overlay{
@@ -359,11 +345,11 @@ body::before{
 @keyframes pulse{50%{transform:scale(1.06)}}
 
 @media(max-width:420px){
-  .brand-main{font-size:42px}
-  .title{font-size:36px}
+  .brand-main{font-size:50px}
+  .title{font-size:42px}
   .countdown{font-size:58px}
   #nextHourText{font-size:56px}
-  .sound-panel{top:10px;right:10px}
+  .sound-panel{top:72px;right:10px}
 }
 </style>
 </head>
@@ -535,8 +521,7 @@ function getBgmFile(hour){
 
 async function updateBgm(hour){
   const file = getBgmFile(hour);
-  const label = dayHours.includes(hour) ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
-  bgmLabel.textContent = label;
+  bgmLabel.textContent = dayHours.includes(hour) ? "☀️ DAY BGM" : "🌙 NIGHT BGM";
 
   if(currentBgmFile === file) return;
 
@@ -595,16 +580,12 @@ function updateProgressColor(progress){
 
   if(progress >= 98){
     bar.style.background = "linear-gradient(90deg,#ff4d4d,#ff9a3c)";
-    bar.style.boxShadow = "0 0 14px rgba(255,77,77,.9)";
   }else if(progress >= 90){
     bar.style.background = "linear-gradient(90deg,#ffd84d,#ff9a3c)";
-    bar.style.boxShadow = "0 0 14px rgba(255,216,77,.9)";
   }else if(progress >= 70){
     bar.style.background = "linear-gradient(90deg,#28EAFF,#00ff99)";
-    bar.style.boxShadow = "0 0 14px rgba(0,255,153,.8)";
   }else{
     bar.style.background = "linear-gradient(90deg,#28EAFF,#40E8FF)";
-    bar.style.boxShadow = "0 0 14px rgba(40,234,255,.8)";
   }
 }
 
